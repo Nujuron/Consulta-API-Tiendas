@@ -44,7 +44,7 @@ gulp.task('serve', gulp.series(['sass'/*,'eslint'*/,'doc'], function () {
     server: "./"
   });
   gulp.watch("./js/*.js",gulp.series(['doc']));
-  //gulp.watch("./js/*.j", gulp.series(['eslint']));
+  //gulp.watch("./js/*.js", gulp.series(['eslint']));
   gulp.watch("./css/*.scss", gulp.series(['sass']));
   gulp.watch("./*.html").on('change', browserSync.reload);
   gulp.watch("./js/*.js").on('change', browserSync.reload);
