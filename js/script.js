@@ -26,5 +26,14 @@ function buildList(tiendas){
 function buildTienda(tienda){
     let divTienda = document.createElement("div");
     divTienda.classList.add("card");
-    let name = tienda.nombre;
+    let nameTienda = document.createElement("h2");
+    nameTienda.textContent = tienda.name;
+    let directionTienda = document.createElement("p");
+    directionTienda.textContent = tienda.direccion;
+    let phoneTienda = document.createElement("p");
+    phoneTienda.textContent = tienda.telefono;
+    divTienda.appendChild(nameTienda);
+    divTienda.appendChild(directionTienda);
+    divTienda.appendChild(phoneTienda);
+    document.body.firstElementChild.nextElementSibling.appendChild(divTienda);
 }
