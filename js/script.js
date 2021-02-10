@@ -8,7 +8,7 @@ const optionsGet = {
 };
 /**
  * Deletes all chlidren from a specified nodes
- * @param {Node to delete the children} myNode 
+ * @param {string} myNode 
  */
 function deleteNodes(myNode) {
     while (myNode.firstChild) {

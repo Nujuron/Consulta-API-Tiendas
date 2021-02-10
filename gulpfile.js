@@ -3,8 +3,8 @@
 var gulp = require('gulp');
 var browserSync = require('browser-sync').create();
 var sass = require('gulp-sass');
-/*const jsdoc = require('gulp-jsdoc3');
-const eslint = require('gulp-eslint');*/
+const jsdoc = require('gulp-jsdoc3');
+//const eslint = require('gulp-eslint');
 
 sass.compiler = require('node-sass');
 
@@ -38,7 +38,7 @@ gulp.task('doc', function (cb) {
 
 //livereload al servidor
 // Static Server + watching scss/html files
-gulp.task('serve', gulp.series(['sass'/*,'eslint','doc'*/], function () {
+gulp.task('serve', gulp.series(['sass'/*,'eslint'*/,'doc'], function () {
 
   browserSync.init({
     server: "./"
