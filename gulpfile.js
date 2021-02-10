@@ -18,12 +18,12 @@ gulp.task('sass', function () {
 
 
 //JSDocs
-/*gulp.task('doc', function (cb) {
+gulp.task('doc', function (cb) {
     gulp.src(['README.md', './js/*.js'], {read: false})
         .pipe(jsdoc(cb));
 });
 //ESLint
-gulp.task('eslint', function(){
+/*gulp.task('eslint', function(){
     return gulp.src('./js/*.js')
         // eslint() attaches the lint output to the "eslint" property
         // of the file object so it can be used by other modules.
@@ -43,7 +43,7 @@ gulp.task('serve', gulp.series(['sass'/*,'eslint','doc'*/], function () {
   browserSync.init({
     server: "./"
   });
-  //gulp.watch("./js/*.js",gulp.series(['doc']));
+  gulp.watch("./js/*.js",gulp.series(['doc']));
   //gulp.watch("./js/*.j", gulp.series(['eslint']));
   gulp.watch("./css/*.scss", gulp.series(['sass']));
   gulp.watch("./*.html").on('change', browserSync.reload);
