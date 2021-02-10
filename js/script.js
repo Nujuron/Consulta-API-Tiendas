@@ -11,8 +11,7 @@ async function showTiendasFetch(){
     var tiendas = await fetch(urlTiendas,optionsGet)
         .then(response => response.text())
         .then(data => {
-            const jsonBreeds = JSON.parse(data);
-            return jsonBreeds;
+            return jsonTiendas = JSON.parse(data);
         })
         .catch(error => {
             console.log(error);
@@ -27,5 +26,5 @@ function buildList(tiendas){
 function buildTienda(tienda){
     let divTienda = document.createElement("div");
     divTienda.classList.add("card");
-    
+    let name = tienda.nombre;
 }
