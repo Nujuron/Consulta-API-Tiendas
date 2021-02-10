@@ -6,6 +6,10 @@ var urlTiendaAdd = "http://localhost:8080/EmprInfRs_BritoAdrian/webresources/tie
 const optionsGet = {
     method: "GET"
 };
+/**
+ * Deletes all chlidren from a specified nodes
+ * @param {Node to delete the children} myNode 
+ */
 function deleteNodes(myNode) {
     while (myNode.firstChild) {
         myNode.removeChild(myNode.lastChild);
