@@ -21,7 +21,9 @@ async function showTiendasFetch(){
     buildList(tiendas);
 }
 function buildList(tiendas){
-    
+    for(let tienda of tiendas){
+        buildTienda(tienda);
+    }
 }
 function buildTienda(tienda){
     let divTienda = document.createElement("div");
