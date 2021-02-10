@@ -6,7 +6,13 @@ var urlTiendaAdd = "http://localhost:8080/EmprInfRs_BritoAdrian/webresources/tie
 const optionsGet = {
     method: "GET"
 };
+function deleteNodes(myNode) {
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.lastChild);
+    }
+}
 async function showTiendasFetch(){
+    deleteNodes(document.body.firstElementChild.nextElementSibling);
     //add loader here
     var tiendas = await fetch(urlTiendas,optionsGet)
         .then(response => response.text())
