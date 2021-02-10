@@ -1,0 +1,53 @@
+$primary-color-button:lightgreen;
+$font-color-h1:yellow;
+html,body{
+    margin:0;
+    height: 100vh;
+}
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 100;
+    display: flex;
+    flex-direction: column;
+}
+header{
+    text-align: center;
+    padding:5px;
+    color:darken($font-color-h1, 10%);
+    background-color: darkgreen;
+    
+}
+
+
+button{
+    background-color: lighten($primary-color-button, 10%);
+    font-weight: bold;
+    border-radius: 10px;
+    border: solid 2px darken($primary-color-button, 60%);
+    font-size: 20px;
+    outline: none;
+    &:hover{
+        background-color: darken($primary-color-button, 40%);
+        
+    }
+    &:active{
+        background-color: darken($primary-color-button, 60%);
+        color:lighten($primary-color-button, 10%);
+        border:none;
+    }
+}
+
+.method{
+    color:darken($primary-color-button, 60%);
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    button{
+        text-align: center;
+    width: 10%;
+    height: auto;
+    }
+}
+
