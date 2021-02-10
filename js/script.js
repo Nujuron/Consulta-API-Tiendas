@@ -32,6 +32,7 @@ function buildList(tiendas){
     }
 }
 function buildTienda(tienda){
+    //usar template maybe
     let divTienda = document.createElement("div");
     divTienda.classList.add("card");
     let nameTienda = document.createElement("h2");
