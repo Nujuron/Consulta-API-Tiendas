@@ -20,6 +20,7 @@ function deleteNodes(myNode) {
  */
 async function showTiendasFetch(){
     deleteNodes(document.body.firstElementChild.nextElementSibling);
+    initializeContent();
     //add loader here
     var tiendas = await fetch(urlTiendas,optionsGet)
         .then(response => response.text())
@@ -59,5 +60,10 @@ function buildTienda(tienda){
     divTienda.appendChild(nameTienda);
     divTienda.appendChild(directionTienda);
     divTienda.appendChild(phoneTienda);
-    document.body.firstElementChild.nextElementSibling.appendChild(divTienda);
+    document.getElementById("tiendas").appendChild(divTienda);
+}
+function initializeContent(){
+    let t = document.getElementsById("templatetiendas");
+    var clone = document.importNode(t.content, true);
+    document.body.firstElementChild.nextElementSibling.appendChild(clone);
 }
