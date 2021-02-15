@@ -15,6 +15,9 @@ function deleteNodes(myNode) {
         myNode.removeChild(myNode.lastChild);
     }
 }
+/**
+ * Get all tiendas with Fetch
+ */
 async function showTiendasFetch(){
     deleteNodes(document.body.firstElementChild.nextElementSibling);
     //add loader here
@@ -30,11 +33,19 @@ async function showTiendasFetch(){
     //hide loader in .finally
     buildList(tiendas);
 }
+/**
+ * Call to build each tienda
+ * @param {Json} tiendas 
+ */
 function buildList(tiendas){
     for(let tienda of tiendas){
         buildTienda(tienda);
     }
 }
+/**
+ * Builds a card with the object information
+ * @param {Object} tienda 
+ */
 function buildTienda(tienda){
     //usar template maybe
     let divTienda = document.createElement("div");
