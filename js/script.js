@@ -4,9 +4,6 @@ document.getElementById("fetch").addEventListener("click", showTiendasFetch);
 
 var urlTiendas = "https://webapp-210130211157.azurewebsites.net/webresources/mitienda/";//change this shit when deployed
 
-const optionsGet = {
-    method: "GET"
-};
 /**
  * Deletes all chlidren from a specified nodes
  * @param {string} myNode 
@@ -26,41 +23,6 @@ function initializeContent() {
     document.getElementById("newTienda").addEventListener("click",showForm);
     document.getElementById("searchById").addEventListener("click",getTiendaById);
 }
-/**
- * Get all tiendas with Fetch
- */
-async function showTiendasFetch() {
-    deleteNodes(document.body.firstElementChild.nextElementSibling);
-    initializeContent();
-    petitionFetch(urlTiendas, optionsGet);
-}
-/**
- * Get one tienda with Fetch
- */
-async function getTiendaById() {
-    deleteNodes(document.getElementById("tiendas"));
-    var idTienda = document.getElementById("searchTienda").value;
-    if(idTienda != null){
-        petitionFetch(urlTiendas + idTienda , optionsGet);
-    }
-}
-/**
- * Generic Fetch petition
- * @param {*} url 
- * @param {*} options 
- */
-async function petitionFetch(url,options){
-    //add loader here
-    await fetch(url, options)
-        .then(response => response.json())
-        .then(data => buildList(data))
-        .catch(error => {
-            console.log(error);
-        })
-        //.finally
-    //hide loader in .finally
-}
-
 /**
  * Call to build each tienda
  * @param {Json} tiendas 
@@ -92,4 +54,86 @@ function buildTienda(tienda) {
 function showForm(){
     document.getElementsByTagName("form")[0].style.display = "block";
 }
+
+//-----------------------------------FETCH-------------------------------------------------------------------------------
+/**
+ * Get all tiendas with Fetch
+ */
+async function showTiendasFetch() {
+    deleteNodes(document.body.firstElementChild.nextElementSibling);
+    initializeContent();
+    requestFetch(urlTiendas);
+}
+/**
+ * Get one tienda with Fetch
+ */
+async function getTiendaById() {
+    deleteNodes(document.getElementById("tiendas"));
+    var idTienda = document.getElementById("searchTienda").value;
+    if(idTienda != null){
+        requestFetchId(urlTiendas + idTienda);
+    }
+}
+/**
+ * Generic Fetch petition
+ * @param {*} url 
+ * @param {*} options 
+ */
+/*async function requestFetch(url, datos, method = 'GET') {
+
+    const options = {
+      method,
+      body: JSON.stringify(datos),
+      headers: {
+        'Content-Type': 'application/json' // we will be sending JSON
+      }
+    };
+  
+    // if params exists and method is GET, add query string to url
+    // otherwise, just add params as a "body" property to the options object
+    
+  
+    const response = await fetch(url, options);
+    const result = await response.json();
+    console.log(result);
+    return result;
+  
+}*/
+async function requestFetch(url,datos,method = 'GET'){
+    //add loader here
+    const options = {
+        method,
+        body: JSON.stringify(datos),
+        headers: {
+          'Content-Type': 'application/json' // we will be sending JSON
+        }
+      };
+    await fetch(url, options)
+        .then(response => response.json())
+        .then(data => buildList(data))
+        .catch(error => {
+            console.log(error);
+        })
+        //.finally
+    //hide loader in .finally
+}
+async function requestFetchId(url,datos,method = 'GET'){
+    //add loader here
+    const options = {
+        method,
+        body: JSON.stringify(datos),
+        headers: {
+          'Content-Type': 'application/json' // we will be sending JSON
+        }
+      };
+    await fetch(url, options)
+        .then(response => response.json())
+        .then(data => buildTienda(data))
+        .catch(error => {
+            console.log(error);
+        })
+        //.finally
+    //hide loader in .finally
+}
+
 
