@@ -125,7 +125,7 @@ async function requestFetch(url,datos,method = 'GET'){
     await fetch(url, options)
         .then(response => response.json())
         .then(data => {
-            hideLoading();
+            
             buildList(data);
         })
         .catch(error => {
@@ -135,7 +135,7 @@ async function requestFetch(url,datos,method = 'GET'){
     
 }
 async function requestFetchId(url,datos,method = 'GET'){
-    //add loader here
+    displayLoading();
     const options = {
         method,
         body: JSON.stringify(datos),
@@ -145,7 +145,10 @@ async function requestFetchId(url,datos,method = 'GET'){
       };
     await fetch(url, options)
         .then(response => response.json())
-        .then(data => buildTienda(data))
+        .then(data => {
+            hideLoading();
+            buildTienda(data)
+        })
         .catch(error => {
             console.log(error);
         })
