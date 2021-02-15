@@ -38,7 +38,7 @@ gulp.task('eslint', function(){
 
 //livereload al servidor
 // Static Server + watching scss/html files
-gulp.task('serve', gulp.series(['sass'/*,'eslint'*/,'doc'], function () {
+gulp.task('serve', gulp.series(['sass','eslint','doc'], function () {
 
   browserSync.init({
     server: "./"
