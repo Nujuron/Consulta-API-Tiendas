@@ -23,13 +23,19 @@ function initializeContent() {
     document.getElementById("newTienda").addEventListener("click",showForm);
     document.getElementById("searchById").addEventListener("click",getTiendaById);
 }
-function addLoader(node){
-    let loader = document.createElement("div");
-    loader.classList.add("loader");
-    node.appendChild(loader);
+function displayLoading() {
+    const loader = document.getElementsByClassName("loading")[0];
+    loader.classList.add("display");
+    // to stop loading after some time
+    setTimeout(() => {
+        loader.classList.remove("display");
+    }, 5000);
 }
-function deleteLoader(){
-    document.getElementsByClassName("loader")[0].remove();
+
+// hiding loading 
+function hideLoading() {
+    const loader = document.getElementsByClassName("loading")[0];
+    loader.classList.remove("display");
 }
 /**
  * Call to build each tienda
@@ -108,7 +114,7 @@ async function getTiendaById() {
   
 }*/
 async function requestFetch(url,datos,method = 'GET'){
-    addLoader(document.body.firstElementChild.nextElementSibling);
+    displayLoading();
     const options = {
         method,
         body: JSON.stringify(datos),
@@ -118,11 +124,14 @@ async function requestFetch(url,datos,method = 'GET'){
       };
     await fetch(url, options)
         .then(response => response.json())
-        .then(data => buildList(data))
+        .then(data => {
+            hideLoading();
+            buildList(data);
+        })
         .catch(error => {
             console.log(error);
         })
-        .finally(deleteLoader())
+        
     
 }
 async function requestFetchId(url,datos,method = 'GET'){
