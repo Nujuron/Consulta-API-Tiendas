@@ -1,8 +1,9 @@
 //document.getElementById("xmr").addEventListener("click", showTiendasXMR);
 document.getElementById("fetch").addEventListener("click", showTiendasFetch);
 //document.getElementById("jquery").addEventListener("click", showTiendasJQuery);
-var urlTiendas = "http://localhost:8080/EmprInfRs_BritoAdrian/webresources/tienda";//change this shit when deployed
-//var urlTiendaAdd = "http://localhost:8080/EmprInfRs_BritoAdrian/webresources/tienda/add";
+
+var urlTiendas = "https://webapp-210130211157.azurewebsites.net/webresources/mitienda/";//change this shit when deployed
+
 const optionsGet = {
     method: "GET"
 };
@@ -16,28 +17,50 @@ function deleteNodes(myNode) {
     }
 }
 /**
+ * Add the template inside main
+ */
+function initializeContent() {
+    let t = document.getElementById("templatetiendas");
+    var clone = document.importNode(t.content, true);
+    document.body.firstElementChild.nextElementSibling.appendChild(clone);
+    document.getElementById("newTienda").addEventListener("click",showForm);
+    document.getElementById("searchById").addEventListener("click",getTiendaById);
+}
+/**
  * Get all tiendas with Fetch
  */
-function showTiendasFetch() {
+async function showTiendasFetch() {
     deleteNodes(document.body.firstElementChild.nextElementSibling);
     initializeContent();
-    //add loader here
-    var tiendas = petitionFetch(urlTiendas, optionsGet);
-    buildList(tiendas);
+    petitionFetch(urlTiendas, optionsGet);
 }
+/**
+ * Get one tienda with Fetch
+ */
+async function getTiendaById() {
+    deleteNodes(document.getElementById("tiendas"));
+    var idTienda = document.getElementById("searchTienda").value;
+    if(idTienda != null){
+        petitionFetch(urlTiendas + idTienda , optionsGet);
+    }
+}
+/**
+ * Generic Fetch petition
+ * @param {*} url 
+ * @param {*} options 
+ */
 async function petitionFetch(url,options){
-    return await fetch(url, options)
-        .then(response => response.text())
-        .then(data => JSON.parse(data))
+    //add loader here
+    await fetch(url, options)
+        .then(response => response.json())
+        .then(data => buildList(data))
         .catch(error => {
             console.log(error);
         })
-        .finally
+        //.finally
     //hide loader in .finally
 }
-/*function getTiendaById() {
 
-}/*
 /**
  * Call to build each tienda
  * @param {Json} tiendas 
@@ -66,11 +89,7 @@ function buildTienda(tienda) {
     divTienda.appendChild(phoneTienda);
     document.getElementById("tiendas").appendChild(divTienda);
 }
-/**
- * Add the template inside main
- */
-function initializeContent() {
-    let t = document.getElementsById("templatetiendas");
-    var clone = document.importNode(t.content, true);
-    document.body.firstElementChild.nextElementSibling.appendChild(clone);
+function showForm(){
+    document.getElementsByTagName("form")[0].style.display = "block";
 }
+
