@@ -1,7 +1,7 @@
 document.getElementById("xmr").addEventListener("click",showTiendasXMR);
 document.getElementById("fetch").addEventListener("click",showTiendasFetch);
 document.getElementById("jquery").addEventListener("click",showTiendasJQuery);
-var urlTiendas = "http://localhost:8080/EmprInfRs_BritoAdrian/webresources/tienda";
+var urlTiendas = "http://localhost:8080/EmprInfRs_BritoAdrian/webresources/tienda";//change this shit when deployed
 var urlTiendaAdd = "http://localhost:8080/EmprInfRs_BritoAdrian/webresources/tienda/add";
 const optionsGet = {
     method: "GET"
@@ -34,6 +34,9 @@ async function showTiendasFetch(){
     //hide loader in .finally
     buildList(tiendas);
 }
+function getTiendaById(){
+    
+}
 /**
  * Call to build each tienda
  * @param {Json} tiendas 
@@ -62,6 +65,9 @@ function buildTienda(tienda){
     divTienda.appendChild(phoneTienda);
     document.getElementById("tiendas").appendChild(divTienda);
 }
+/**
+ * Add the template inside main
+ */
 function initializeContent(){
     let t = document.getElementsById("templatetiendas");
     var clone = document.importNode(t.content, true);
