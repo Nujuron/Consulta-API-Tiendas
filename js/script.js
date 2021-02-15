@@ -23,6 +23,14 @@ function initializeContent() {
     document.getElementById("newTienda").addEventListener("click",showForm);
     document.getElementById("searchById").addEventListener("click",getTiendaById);
 }
+function addLoader(node){
+    let loader = document.createElement("div");
+    loader.classList.add("loader");
+    node.appendChild(loader);
+}
+function deleteLoader(){
+    document.getElementsByClassName("loader")[0].remove();
+}
 /**
  * Call to build each tienda
  * @param {Json} tiendas 
@@ -100,7 +108,7 @@ async function getTiendaById() {
   
 }*/
 async function requestFetch(url,datos,method = 'GET'){
-    //add loader here
+    addLoader(document.body.firstElementChild.nextElementSibling);
     const options = {
         method,
         body: JSON.stringify(datos),
@@ -114,8 +122,8 @@ async function requestFetch(url,datos,method = 'GET'){
         .catch(error => {
             console.log(error);
         })
-        //.finally
-    //hide loader in .finally
+        .finally(deleteLoader())
+    
 }
 async function requestFetchId(url,datos,method = 'GET'){
     //add loader here
