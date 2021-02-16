@@ -34,4 +34,19 @@ gulp.task('doc', function (cb) {
     gulp.src(['./js/*.js'], {read: false})
         .pipe(jsdoc(cb));
 });
+
+gulp.task('serve', gulp.series(['sass'], function () {
+
+  browserSync.init({
+      server: "./"
+  });
+
+  gulp.watch("./scss/*.scss", gulp.series(['sass']));
+  gulp.watch("./*.html").on('change', browserSync.reload);
+  gulp.watch("./js/*.js").on('change', browserSync.reload);
+  gulp.watch("./js/*.js", gulp.series(['doc'],'eslint'));
+}));
+
+gulp.task('default', gulp.series('serve','doc','sass','eslint'));
+
 //local server
