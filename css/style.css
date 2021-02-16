@@ -54,6 +54,7 @@ button {
   box-shadow: 3px 4px 15px -5px rgba(0, 0, 0, 0.7); }
 
 .method {
+  margin-top: 300px;
   color: #0a420a;
   min-height: 300px;
   display: flex;
@@ -88,7 +89,7 @@ form {
   border-radius: 5px;
   width: 51%;
   max-height: 0;
-  transition: max-height 1.7s ease-out;
+  transition: max-height .5s ease-out;
   padding: 10px;
   overflow: hidden; }
   form .datos {

@@ -63,6 +63,7 @@ button{
   
 }
 .method{
+    margin-top:300px ;
     color:darken($primary-color-button, 60%);
     min-height: 300px;
     display: flex;
@@ -98,7 +99,7 @@ form{
     border-radius: 5px;
     width: 51%;
     max-height: 0;
-    transition: max-height 1.7s ease-out;
+    transition: max-height .5s ease-out;
     padding: 10px;
     overflow: hidden;
     .datos{
