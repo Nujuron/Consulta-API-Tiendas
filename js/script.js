@@ -1,4 +1,4 @@
-//document.getElementById("xmr").addEventListener("click", showTiendasXMR);
+document.getElementById("xmr").addEventListener("click", showTiendasXMR);
 document.getElementById("fetch").addEventListener("click", showTiendasFetch);
 //document.getElementById("jquery").addEventListener("click", showTiendasJQuery);
 
@@ -13,16 +13,7 @@ function deleteNodes(myNode) {
         myNode.removeChild(myNode.lastChild);
     }
 }
-/**
- * Add the template inside main
- */
-function initializeContent() {
-    let t = document.getElementById("templatetiendas");
-    var clone = document.importNode(t.content, true);
-    document.body.firstElementChild.nextElementSibling.appendChild(clone);
-    document.getElementById("newTienda").addEventListener("click",showForm);
-    document.getElementById("searchById").addEventListener("click",getTiendaById);
-}
+
 function displayLoading() {
     const loader = document.getElementsByClassName("loading")[0];
     loader.classList.add("display");
@@ -65,26 +56,36 @@ function buildTienda(tienda) {
     divTienda.appendChild(phoneTienda);
     document.getElementById("tiendas").appendChild(divTienda);
 }
-function showForm(){
+function showForm() {
     document.getElementsByTagName("form")[0].style.display = "block";
 }
 
 //-----------------------------------FETCH-------------------------------------------------------------------------------
 /**
+ * Add the template inside main for fetch
+ */
+function initializeContentFetch() {
+    let t = document.getElementById("templatetiendas");
+    var clone = document.importNode(t.content, true);
+    document.body.firstElementChild.nextElementSibling.appendChild(clone);
+    document.getElementById("newTienda").addEventListener("click", showForm);
+    document.getElementById("searchById").addEventListener("click", getTiendaByIdFetch);
+}
+/**
  * Get all tiendas with Fetch
  */
 async function showTiendasFetch() {
     deleteNodes(document.body.firstElementChild.nextElementSibling);
-    initializeContent();
+    initializeContentFetch();
     requestFetch(urlTiendas);
 }
 /**
  * Get one tienda with Fetch
  */
-async function getTiendaById() {
+async function getTiendaByIdFetch() {
     deleteNodes(document.getElementById("tiendas"));
     var idTienda = document.getElementById("searchTienda").value;
-    if(idTienda != null){
+    if (idTienda != null) {
         requestFetchId(urlTiendas + idTienda);
     }
 }
@@ -113,47 +114,82 @@ async function getTiendaById() {
     return result;
   
 }*/
-async function requestFetch(url,datos,method = 'GET'){
+async function requestFetch(url, datos, method = 'GET') {
     displayLoading();
     const options = {
         method,
         body: JSON.stringify(datos),
         headers: {
-          'Content-Type': 'application/json' // we will be sending JSON
+            'Content-Type': 'application/json' // we will be sending JSON
         }
-      };
+    };
     await fetch(url, options)
         .then(response => response.json())
         .then(data => {
-            
             buildList(data);
+            hideLoading();
         })
         .catch(error => {
             console.log(error);
         })
-        
-    
 }
-async function requestFetchId(url,datos,method = 'GET'){
+async function requestFetchId(url, datos, method = 'GET') {
     displayLoading();
     const options = {
         method,
         body: JSON.stringify(datos),
         headers: {
-          'Content-Type': 'application/json' // we will be sending JSON
+            'Content-Type': 'application/json' // we will be sending JSON
         }
-      };
+    };
     await fetch(url, options)
         .then(response => response.json())
         .then(data => {
+            buildTienda(data);
             hideLoading();
-            buildTienda(data)
         })
         .catch(error => {
             console.log(error);
         })
-        //.finally
+    //.finally
     //hide loader in .finally
 }
+//-----------------------------------XMR-------------------------------------------------------------------------------
+/**
+ * Add the template inside main
+ */
+function initializeContentXMR() {
+    let t = document.getElementById("templatetiendas");
+    var clone = document.importNode(t.content, true);
+    document.body.firstElementChild.nextElementSibling.appendChild(clone);
+    document.getElementById("newTienda").addEventListener("click", showForm);
+    document.getElementById("searchById").addEventListener("click", getTiendaByIdXMR);
+}
+async function showTiendasXMR() {
+    deleteNodes(document.body.firstElementChild.nextElementSibling);
+    initializeContentXMR();
+    const client = new XMLHttpRequest();
 
+    client.addEventListener("readystatechange", () => {
+        if (client.readyState === 4 && client.status === 200)
+            buildList(JSON.parse(client.responseText));
+    });
 
+    client.open("GET", urlTiendas);
+    client.send();
+}
+async function getTiendaByIdXMR() {
+    deleteNodes(document.getElementById("tiendas"));
+    var idTienda = document.getElementById("searchTienda").value;
+    if (idTienda != null) {
+        const client = new XMLHttpRequest();
+
+        client.addEventListener("readystatechange", () => {
+            if (client.readyState === 4 && client.status === 200)
+                buildTienda(JSON.parse(client.responseText));
+        });
+
+        client.open("GET", urlTiendas + idTienda);
+        client.send();
+    }
+}
