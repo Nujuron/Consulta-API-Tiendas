@@ -338,15 +338,20 @@ function initializeContentXHR() {
 async function showTiendasXHR() {
     deleteNodes(document.body.firstElementChild.nextElementSibling);
     initializeContentXHR();
+    
     const client = new XMLHttpRequest();
-
+    
     client.addEventListener("readystatechange", () => {
-        if (client.readyState === 4 && client.status === 200)
+        if (client.readyState === 4 && client.status === 200){
+            hideLoading();
             buildList(JSON.parse(client.responseText));
+        }
+        
     });
-
+    displayLoading();
     client.open("GET", urlTiendas);
     client.send();
+    
 }
 async function getTiendaByIdXHR() {
     deleteNodes(document.getElementById("tiendas"));
@@ -355,14 +360,17 @@ async function getTiendaByIdXHR() {
     document.getElementById("searchById").textContent = "X";
     if (idTienda != "") {
         const client = new XMLHttpRequest();
-
+        
         client.addEventListener("readystatechange", () => {
-            if (client.readyState === 4 && client.status === 200)
+            if (client.readyState === 4 && client.status === 200){
                 buildTienda(JSON.parse(client.responseText));
+                hideLoading();
+            }
         });
-
+        displayLoading();
         client.open("GET", urlTiendas + idTienda);
         client.send();
+        
     } else {
         let errorText = document.createElement("h2");
         errorText.textContent = "Tienda no encontrada";
@@ -410,14 +418,18 @@ function getTiendaByIdJquery() {
     }
 }
 async function getTiendasJquery(url) {
+    displayLoading()
     await $.get(url, function (json) {
         buildList(json);
     });
+    hideLoading()
 }
 async function getTiendaIdJquery(url) {
+    displayLoading()
     await $.get(url, function (json) {
         buildTienda(json);
     });
+    hideLoading()
 }
 async function postJquery() {
     let data = checkForm();
