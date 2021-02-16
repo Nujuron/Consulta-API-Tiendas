@@ -357,7 +357,7 @@ async function postXHR() {
         http.onreadystatechange = function () {
             showTiendasXHR();
         }
-        http.send(JSON.stringify(data));
+        http.send(data);
         showTiendasXHR();
     }
 }
