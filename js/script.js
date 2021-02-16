@@ -58,9 +58,9 @@ function buildTienda(tienda) {
 }
 function showForm() {
     let form = document.getElementsByTagName("form")[0];
-    if(form.className != "show"){
+    if (form.className != "show") {
         form.classList.add("show");
-    }else{
+    } else {
         form.classList.remove("show");
     }
 }
@@ -219,9 +219,11 @@ async function showTiendasFetch() {
 async function getTiendaByIdFetch() {
     deleteNodes(document.getElementById("tiendas"));
     var idTienda = document.getElementById("searchTienda").value;
+    document.getElementById("searchById").addEventListener("click", showTiendasFetch);
+    document.getElementById("searchById").textContent = "X";
     if (idTienda != "") {
         requestFetchId(urlTiendas + idTienda);
-    }else{
+    } else {
         let errorText = document.createElement("h2");
         errorText.textContent = "Tienda no encontrada";
         document.getElementById("tiendas").appendChild(errorText);
@@ -295,9 +297,12 @@ async function requestFetchId(url, datos, method = 'GET') {
 async function postFetch() {
     let data = checkForm();
     if (data != -1) {
-        fetch(urlTiendas, {
+        await fetch(urlTiendas, {
             method: 'POST',
-            body: data
+            body: data,
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
             .then(function (response) {
                 if (response.ok) {
@@ -311,7 +316,8 @@ async function postFetch() {
             })
             .catch(function (err) {
                 console.log(err);
-            });
+            })
+            .finally(() => showTiendasFetch())
     }
 }
 
@@ -345,6 +351,8 @@ async function showTiendasXHR() {
 async function getTiendaByIdXHR() {
     deleteNodes(document.getElementById("tiendas"));
     var idTienda = document.getElementById("searchTienda").value;
+    document.getElementById("searchById").addEventListener("click", showTiendasXHR);
+    document.getElementById("searchById").textContent = "X";
     if (idTienda != "") {
         const client = new XMLHttpRequest();
 
@@ -355,7 +363,7 @@ async function getTiendaByIdXHR() {
 
         client.open("GET", urlTiendas + idTienda);
         client.send();
-    }else{
+    } else {
         let errorText = document.createElement("h2");
         errorText.textContent = "Tienda no encontrada";
         document.getElementById("tiendas").appendChild(errorText);
@@ -371,7 +379,6 @@ async function postXHR() {
             showTiendasXHR();
         }
         http.send(data);
-        showTiendasXHR();
     }
 }
 //-----------------------------------Jquery-------------------------------------------------------------------------------
@@ -392,9 +399,11 @@ function showTiendasJQuery() {
 function getTiendaByIdJquery() {
     deleteNodes(document.getElementById("tiendas"));
     var idTienda = document.getElementById("searchTienda").value;
+    document.getElementById("searchById").addEventListener("click", showTiendasJQuery);
+    document.getElementById("searchById").textContent = "X";
     if (idTienda != "") {
         getTiendaIdJquery(urlTiendas + idTienda);
-    }else{
+    } else {
         let errorText = document.createElement("h2");
         errorText.textContent = "Tienda no encontrada";
         document.getElementById("tiendas").appendChild(errorText);
@@ -410,11 +419,20 @@ async function getTiendaIdJquery(url) {
         buildTienda(json);
     });
 }
-async function postJquery(){
+async function postJquery() {
     let data = checkForm();
     if (data != -1) {
-        $.post( urlTiendas, data);
-        showTiendasJQuery();
+        $.ajax({
+            type: 'POST',
+            url: urlTiendas,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        })
+            .fail(console.log("Idk :)"))
+            .always(showTiendasJQuery())
+
     }
-    
+
 }

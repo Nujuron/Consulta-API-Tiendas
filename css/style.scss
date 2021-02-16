@@ -34,7 +34,7 @@ section{
     width: 85%;
 }
 h2{
-    color:darken($primary-color-card, 10%);
+    color:darken($primary-color-card, 5%);
 }
 button{
     background-color: lighten($primary-color-button, 10%);
@@ -88,8 +88,9 @@ button{
     cursor: pointer;
 }
 #searchById{
-    width: 30px;
-    height: 30px;
+    color: darken($primary-color-button, 40%);
+    border:darken($primary-color-button, 40%) solid 2px;
+    background-color: white;
 }
 form{
     display: none;

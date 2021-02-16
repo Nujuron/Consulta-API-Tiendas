@@ -29,7 +29,7 @@ section {
   width: 85%; }
 
 h2 {
-  color: #004d00; }
+  color: #006700; }
 
 button {
   background-color: #bcf5bc;
@@ -78,8 +78,9 @@ button {
   cursor: pointer; }
 
 #searchById {
-  width: 30px;
-  height: 30px; }
+  color: #189a18;
+  border: #189a18 solid 2px;
+  background-color: white; }
 
 form {
   display: none;
