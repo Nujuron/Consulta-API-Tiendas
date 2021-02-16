@@ -368,6 +368,7 @@ function initializeContentJquery() {
     document.body.firstElementChild.nextElementSibling.appendChild(clone);
     document.getElementById("newTienda").addEventListener("click", showForm);
     document.getElementById("searchById").addEventListener("click", getTiendaByIdJquery);
+    document.getElementById("sendTienda").addEventListener("click", postJquery);
     addEventListeners();
 }
 function showTiendasJQuery() {
@@ -391,4 +392,12 @@ async function getTiendaIdJquery(url) {
     await $.get(url, function (json) {
         buildTienda(json);
     });
+}
+async function postJquery(){
+    let data = checkForm();
+    if (data != -1) {
+        $.post( urlTiendas, data);
+        showTiendasJQuery();
+    }
+    
 }
