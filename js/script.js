@@ -57,7 +57,12 @@ function buildTienda(tienda) {
     document.getElementById("tiendas").appendChild(divTienda);
 }
 function showForm() {
-    document.getElementsByTagName("form")[0].style.display = "block";
+    let form = document.getElementsByTagName("form")[0];
+    if(form.className != "show"){
+        form.classList.add("show");
+    }else{
+        form.classList.remove("show");
+    }
 }
 function createObjectTienda() {
     var nameTienda = document.getElementById("nombre").value;
