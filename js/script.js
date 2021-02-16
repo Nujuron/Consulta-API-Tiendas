@@ -1,6 +1,6 @@
 document.getElementById("xmr").addEventListener("click", showTiendasXMR);
 document.getElementById("fetch").addEventListener("click", showTiendasFetch);
-//document.getElementById("jquery").addEventListener("click", showTiendasJQuery);
+document.getElementById("jquery").addEventListener("click", showTiendasJQuery);
 
 var urlTiendas = "https://webapp-210130211157.azurewebsites.net/webresources/mitienda/";//change this shit when deployed
 
@@ -58,6 +58,16 @@ function buildTienda(tienda) {
 }
 function showForm() {
     document.getElementsByTagName("form")[0].style.display = "block";
+}
+function createObjectTienda(){
+    var nameTienda = document.getElementById("nombre").value;
+    var direccionTienda = document.getElementById("direccion").value;
+    var localidadTienda = document.getElementById("localidad").value;
+    var tlfTienda = document.getElementById("tlf").value;
+    var jsonData = {
+        "nombreTienda":nameTienda,"direccion":direccionTienda,"localidad":localidadTienda,"telefono":tlfTienda
+    };
+    return jsonData;
 }
 
 //-----------------------------------FETCH-------------------------------------------------------------------------------
@@ -154,7 +164,9 @@ async function requestFetchId(url, datos, method = 'GET') {
     //.finally
     //hide loader in .finally
 }
+
 //-----------------------------------XMR-------------------------------------------------------------------------------
+
 /**
  * Add the template inside main
  */
@@ -192,4 +204,34 @@ async function getTiendaByIdXMR() {
         client.open("GET", urlTiendas + idTienda);
         client.send();
     }
+}
+//-----------------------------------Jquery-------------------------------------------------------------------------------
+function initializeContentJquery() {
+    let t = document.getElementById("templatetiendas");
+    var clone = document.importNode(t.content, true);
+    document.body.firstElementChild.nextElementSibling.appendChild(clone);
+    document.getElementById("newTienda").addEventListener("click", showForm);
+    document.getElementById("searchById").addEventListener("click", getTiendaByIdJquery);
+}
+function showTiendasJQuery(){
+    deleteNodes(document.body.firstElementChild.nextElementSibling);
+    initializeContentJquery();
+    getTiendasJquery(urlTiendas);
+}
+function getTiendaByIdJquery(){
+    deleteNodes(document.getElementById("tiendas"));
+    var idTienda = document.getElementById("searchTienda").value;
+    if (idTienda != null) {
+        getTiendaIdJquery(urlTiendas + idTienda);
+    }
+}
+async function getTiendasJquery(url){
+    await $.get(url, function (json){
+        buildList(json);
+    });
+}
+async function getTiendaIdJquery(url){
+    await $.get(url, function (json){
+        buildTienda(json);
+    });
 }
