@@ -93,11 +93,14 @@ button{
     background-color: white;
 }
 form{
-    display: none;
-    border:darken($primary-color-card, 10%) solid 2px;
+    display: inline;
+    border:none;
     border-radius: 5px;
-    width: 700px;
+    width: 51%;
+    max-height: 0;
+    transition: max-height 1.7s ease-out;
     padding: 10px;
+    overflow: hidden;
     .datos{
         display: grid;
         grid-template-columns: auto auto;
@@ -114,7 +117,8 @@ form{
     
 }
 .show{
-    display: inline !important;
+    max-height: 900px;
+    border:darken($primary-color-card, 10%) solid 2px;
 }
 
 .loading {

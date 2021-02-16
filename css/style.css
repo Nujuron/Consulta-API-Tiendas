@@ -83,11 +83,14 @@ button {
   background-color: white; }
 
 form {
-  display: none;
-  border: #004d00 solid 2px;
+  display: inline;
+  border: none;
   border-radius: 5px;
-  width: 700px;
-  padding: 10px; }
+  width: 51%;
+  max-height: 0;
+  transition: max-height 1.7s ease-out;
+  padding: 10px;
+  overflow: hidden; }
   form .datos {
     display: grid;
     grid-template-columns: auto auto;
@@ -100,7 +103,8 @@ form {
       outline: 0; }
 
 .show {
-  display: inline !important; }
+  max-height: 900px;
+  border: #004d00 solid 2px; }
 
 .loading {
   width: 2rem;
