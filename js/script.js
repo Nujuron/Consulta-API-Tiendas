@@ -1,4 +1,4 @@
-document.getElementById("xmr").addEventListener("click", showTiendasXMR);
+document.getElementById("xmr").addEventListener("click", showTiendasXHR);
 document.getElementById("fetch").addEventListener("click", showTiendasFetch);
 document.getElementById("jquery").addEventListener("click", showTiendasJQuery);
 
@@ -48,7 +48,7 @@ function buildTienda(tienda) {
     let nameTienda = document.createElement("h2");
     nameTienda.textContent = tienda.nombreTienda;
     let directionTienda = document.createElement("p");
-    directionTienda.textContent = `${tienda.direccion} + (${tienda.localidad})`;
+    directionTienda.textContent = `${tienda.direccion} (${tienda.localidad})`;
     let phoneTienda = document.createElement("p");
     phoneTienda.textContent = tienda.telefono;
     divTienda.appendChild(nameTienda);
@@ -59,42 +59,132 @@ function buildTienda(tienda) {
 function showForm() {
     document.getElementsByTagName("form")[0].style.display = "block";
 }
-function createObjectTienda(){
+function createObjectTienda() {
     var nameTienda = document.getElementById("nombre").value;
     var direccionTienda = document.getElementById("direccion").value;
     var localidadTienda = document.getElementById("localidad").value;
     var tlfTienda = document.getElementById("tlf").value;
     var jsonData = {
-        "nombreTienda":nameTienda,"direccion":direccionTienda,"localidad":localidadTienda,"telefono":tlfTienda
+        "nombreTienda": nameTienda, "direccion": direccionTienda, "localidad": localidadTienda, "telefono": tlfTienda
     };
-    return jsonData;
+    return JSON.stringify(jsonData);
 }
-var nameShop = document.getElementById("nombre");
 
-function validateName() {
-    const errorMsg = nameShop.nextElementSibling;
-    
-    if (nameShop.validity.valueMissing) {
-        nameShop.classList.add("error");
-        nameShop.classList.remove("success");
-        errorMsg.textContent = "Este campo es obligatorio";
-        errorMsg.classList.add("errormsg");
-    } else if (nameShop.validity.patternMismatch) {
-        nameShop.classList.add("error");
-        nameShop.classList.remove("success");
-        errorMsg.textContent = "No es un nombre valido";
-        errorMsg.classList.add("errormsg");
-    } else {
-        nameShop.classList.remove("error");
-        nameShop.classList.add("success");
-        errorMsg.textContent = "Todo correcto";
-        errorMsg.classList.add("goodmsg");
-        errorMsg.classList.remove("errormsg");
-        
+
+
+function addEventListeners() {
+    var nameShop = document.getElementById("nombre");
+    function validateName() {
+        const errorMsg = nameShop.nextElementSibling;
+
+        if (nameShop.validity.valueMissing) {
+            nameShop.classList.add("error");
+            nameShop.classList.remove("success");
+            errorMsg.textContent = "Este campo es obligatorio";
+            errorMsg.classList.add("errormsg");
+        } else {
+            nameShop.classList.remove("error");
+            nameShop.classList.add("success");
+            errorMsg.textContent = "Todo correcto";
+            errorMsg.classList.add("goodmsg");
+            errorMsg.classList.remove("errormsg");
+
+        }
     }
-}
-function checkForm(){
 
+
+    var direccion = document.getElementById("direccion");
+    function validateDireccion() {
+        const errorMsg = direccion.nextElementSibling;
+
+        if (direccion.validity.valueMissing) {
+            direccion.classList.add("error");
+            direccion.classList.remove("success");
+            errorMsg.textContent = "Este campo es obligatorio";
+            errorMsg.classList.add("errormsg");
+        } else {
+            direccion.classList.remove("error");
+            direccion.classList.add("success");
+            errorMsg.textContent = "Todo correcto";
+            errorMsg.classList.add("goodmsg");
+            errorMsg.classList.remove("errormsg");
+        }
+    }
+
+
+    var localidad = document.getElementById("localidad");
+    function validateLocalidad() {
+        const errorMsg = localidad.nextElementSibling;
+
+        if (localidad.validity.valueMissing) {
+            localidad.classList.add("error");
+            localidad.classList.remove("success");
+            errorMsg.textContent = "Este campo es obligatorio";
+            errorMsg.classList.add("errormsg");
+        } else {
+            localidad.classList.remove("error");
+            localidad.classList.add("success");
+            errorMsg.textContent = "Todo correcto";
+            errorMsg.classList.add("goodmsg");
+            errorMsg.classList.remove("errormsg");
+
+        }
+    }
+
+
+    var phone = document.getElementById("tlf");
+    function validatePhone() {
+        const errorMsg = phone.nextElementSibling;
+
+        if (phone.validity.valueMissing) {
+            phone.classList.add("error");
+            phone.classList.remove("success");
+            errorMsg.textContent = "Este campo es obligatorio";
+            errorMsg.classList.add("errormsg");
+        } else if (phone.validity.patternMismatch) {
+            phone.classList.add("error");
+            phone.classList.remove("success");
+            errorMsg.textContent = "Introduzca un numero de telefono valido";
+            errorMsg.classList.add("errormsg");
+        } else {
+            phone.classList.remove("error");
+            phone.classList.add("success");
+            errorMsg.textContent = "Todo correcto";
+            errorMsg.classList.add("goodmsg");
+            errorMsg.classList.remove("errormsg");
+
+        }
+
+    }
+    phone.addEventListener("input", validatePhone);
+    localidad.addEventListener("input", validateLocalidad);
+    direccion.addEventListener("input", validateDireccion);
+    nameShop.addEventListener("input", validateName);
+}
+
+function checkForm() {
+    var phone = document.getElementById("tlf");
+    var localidad = document.getElementById("localidad");
+    var direccion = document.getElementById("direccion");
+    var nameShop = document.getElementById("nombre");
+    let countFails = 0;
+    if (!nameShop.validity.valid) {
+        countFails++;
+    }
+    if (!direccion.validity.valid) {
+        countFails++;
+    }
+    if (!localidad.validity.valid) {
+        countFails++;
+    }
+    if (!phone.validity.valid) {
+        countFails++;
+    }
+    if (countFails == 0) {
+        return createObjectTienda();
+    } else {
+        return -1;
+    }
 }
 
 //-----------------------------------FETCH-------------------------------------------------------------------------------
@@ -106,8 +196,9 @@ function initializeContentFetch() {
     var clone = document.importNode(t.content, true);
     document.body.firstElementChild.nextElementSibling.appendChild(clone);
     document.getElementById("newTienda").addEventListener("click", showForm);
-    document.getElementById("sendTienda").addEventListener("click", checkForm);
+    document.getElementById("sendTienda").addEventListener("click", postFetch);
     document.getElementById("searchById").addEventListener("click", getTiendaByIdFetch);
+    addEventListeners();
 }
 /**
  * Get all tiendas with Fetch
@@ -192,22 +283,46 @@ async function requestFetchId(url, datos, method = 'GET') {
     //.finally
     //hide loader in .finally
 }
+async function postFetch() {
+    let data = checkForm();
+    if (data != -1) {
+        fetch(urlTiendas, {
+            method: 'POST',
+            body: data
+        })
+            .then(function (response) {
+                if (response.ok) {
+                    return response.text()
+                } else {
+                    throw "Error en la llamada Ajax";
+                }
+            })
+            .then(function (texto) {
+                console.log(texto);
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    }
+}
 
-//-----------------------------------XMR-------------------------------------------------------------------------------
+//-----------------------------------XHR-------------------------------------------------------------------------------
 
 /**
  * Add the template inside main
  */
-function initializeContentXMR() {
+function initializeContentXHR() {
     let t = document.getElementById("templatetiendas");
     var clone = document.importNode(t.content, true);
     document.body.firstElementChild.nextElementSibling.appendChild(clone);
     document.getElementById("newTienda").addEventListener("click", showForm);
-    document.getElementById("searchById").addEventListener("click", getTiendaByIdXMR);
+    document.getElementById("searchById").addEventListener("click", getTiendaByIdXHR);
+    document.getElementById("sendTienda").addEventListener("click", postXHR);
+    addEventListeners();
 }
-async function showTiendasXMR() {
+async function showTiendasXHR() {
     deleteNodes(document.body.firstElementChild.nextElementSibling);
-    initializeContentXMR();
+    initializeContentXHR();
     const client = new XMLHttpRequest();
 
     client.addEventListener("readystatechange", () => {
@@ -218,7 +333,7 @@ async function showTiendasXMR() {
     client.open("GET", urlTiendas);
     client.send();
 }
-async function getTiendaByIdXMR() {
+async function getTiendaByIdXHR() {
     deleteNodes(document.getElementById("tiendas"));
     var idTienda = document.getElementById("searchTienda").value;
     if (idTienda != null) {
@@ -233,6 +348,19 @@ async function getTiendaByIdXMR() {
         client.send();
     }
 }
+async function postXHR() {
+    let data = checkForm();
+    if (data != -1) {
+        let http = new XMLHttpRequest();
+        http.open('POST', urlTiendas, true);
+        http.setRequestHeader('Content-type', 'application/json');
+        http.onreadystatechange = function () {
+            showTiendasXHR();
+        }
+        http.send(JSON.stringify(data));
+        showTiendasXHR();
+    }
+}
 //-----------------------------------Jquery-------------------------------------------------------------------------------
 function initializeContentJquery() {
     let t = document.getElementById("templatetiendas");
@@ -240,26 +368,27 @@ function initializeContentJquery() {
     document.body.firstElementChild.nextElementSibling.appendChild(clone);
     document.getElementById("newTienda").addEventListener("click", showForm);
     document.getElementById("searchById").addEventListener("click", getTiendaByIdJquery);
+    addEventListeners();
 }
-function showTiendasJQuery(){
+function showTiendasJQuery() {
     deleteNodes(document.body.firstElementChild.nextElementSibling);
     initializeContentJquery();
     getTiendasJquery(urlTiendas);
 }
-function getTiendaByIdJquery(){
+function getTiendaByIdJquery() {
     deleteNodes(document.getElementById("tiendas"));
     var idTienda = document.getElementById("searchTienda").value;
     if (idTienda != null) {
         getTiendaIdJquery(urlTiendas + idTienda);
     }
 }
-async function getTiendasJquery(url){
-    await $.get(url, function (json){
+async function getTiendasJquery(url) {
+    await $.get(url, function (json) {
         buildList(json);
     });
 }
-async function getTiendaIdJquery(url){
-    await $.get(url, function (json){
+async function getTiendaIdJquery(url) {
+    await $.get(url, function (json) {
         buildTienda(json);
     });
 }
