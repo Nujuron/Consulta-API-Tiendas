@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 'use strict';
 
 var gulp = require('gulp');
@@ -10,21 +11,14 @@ sass.compiler = require('node-sass');
 
 // Compile sass into CSS & auto-inject into browsers
 gulp.task('sass', function () {
-  return gulp.src("./css/*.scss")
-    .pipe(sass())
-    .pipe(gulp.dest("./css"))
-    .pipe(browserSync.stream());
+    return gulp.src("./scss/*.scss")
+        .pipe(sass())
+        .pipe(gulp.dest("./css"))
+        .pipe(browserSync.stream());
 });
-
-
-//JSDocs
-gulp.task('doc', function (cb) {
-    gulp.src(['README.md', './js/*.js'], {read: false})
-        .pipe(jsdoc(cb));
-});
-//ESLint
-gulp.task('eslint', function(){
-    gulp.src('./js/*.js')
+ 
+gulp.task('eslint', () => {
+    gulp.src(['./js/*.js'])
         // eslint() attaches the lint output to the "eslint" property
         // of the file object so it can be used by other modules.
         .pipe(eslint())
@@ -36,20 +30,8 @@ gulp.task('eslint', function(){
         .pipe(eslint.failAfterError());
 });
 
-//livereload al servidor
-// Static Server + watching scss/html files
-gulp.task('serve', gulp.series(['sass','eslint','doc'], function () {
-
-  browserSync.init({
-    server: "./"
-  });
-  gulp.watch("./js/*.js",gulp.series(['doc']));
-  gulp.watch("./js/*.js", gulp.series(['eslint']));
-  gulp.watch("./css/*.scss", gulp.series(['sass']));
-  gulp.watch("./*.html").on('change', browserSync.reload);
-  gulp.watch("./js/*.js").on('change', browserSync.reload);
-}));
-
-
-gulp.task('default', gulp.series(['serve']));
+gulp.task('doc', function (cb) {
+    gulp.src(['./js/*.js'], {read: false})
+        .pipe(jsdoc(cb));
+});
 //local server
