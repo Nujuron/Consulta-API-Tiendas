@@ -14,6 +14,12 @@ header {
   color: #cccc00;
   background-color: darkgreen; }
 
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
 button {
   background-color: #bcf5bc;
   font-weight: bold;
@@ -24,9 +30,19 @@ button {
   button:hover {
     background-color: #189a18; }
   button:active {
-    background-color: #0a420a;
+    background-color: green;
     color: #bcf5bc;
     border: none; }
+
+.card {
+  margin: 10px;
+  width: 60%;
+  padding: 4px;
+  border: solid 2px green;
+  border-radius: 23px;
+  box-shadow: 3px 4px 15px -5px rgba(0, 0, 0, 0.7); }
+  .card h2 {
+    color: #004d00; }
 
 .method {
   color: #0a420a;
@@ -39,6 +55,10 @@ button {
     text-align: center;
     width: 10%;
     height: auto; }
+
+#searchById {
+  width: 30px;
+  height: 30px; }
 
 form {
   display: none; }
