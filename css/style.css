@@ -62,6 +62,8 @@ button {
 
 form {
   display: none; }
+  form input {
+    outline: 0; }
 
 .loading {
   width: 2rem;
@@ -71,7 +73,7 @@ form {
   border-radius: 100%;
   margin: auto;
   visibility: hidden;
-  animation: spin 1s infinite linear; }
+  animation: spin 1.5s infinite linear; }
 
 .loading.display {
   visibility: visible; }
