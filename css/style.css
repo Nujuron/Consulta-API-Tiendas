@@ -28,6 +28,9 @@ section {
   align-items: center;
   width: 85%; }
 
+h2 {
+  color: #004d00; }
+
 button {
   background-color: #bcf5bc;
   font-weight: bold;
@@ -49,8 +52,6 @@ button {
   border: solid 2px green;
   border-radius: 23px;
   box-shadow: 3px 4px 15px -5px rgba(0, 0, 0, 0.7); }
-  .card h2 {
-    color: #004d00; }
 
 .method {
   color: #0a420a;
@@ -64,12 +65,28 @@ button {
     width: 10%;
     height: auto; }
 
+#searchBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 50%; }
+
+#newTienda {
+  background-color: white;
+  border: none;
+  color: #004d00;
+  cursor: pointer; }
+
 #searchById {
   width: 30px;
   height: 30px; }
 
 form {
-  display: none; }
+  display: none;
+  border: #004d00 solid 2px;
+  border-radius: 5px;
+  width: 700px;
+  padding: 10px; }
   form .datos {
     display: grid;
     grid-template-columns: auto auto;
@@ -83,12 +100,6 @@ form {
 
 .show {
   display: inline !important; }
-
-#searchBar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 50%; }
 
 .loading {
   width: 2rem;

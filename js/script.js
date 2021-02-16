@@ -219,8 +219,12 @@ async function showTiendasFetch() {
 async function getTiendaByIdFetch() {
     deleteNodes(document.getElementById("tiendas"));
     var idTienda = document.getElementById("searchTienda").value;
-    if (idTienda != null) {
+    if (idTienda != "") {
         requestFetchId(urlTiendas + idTienda);
+    }else{
+        let errorText = document.createElement("h2");
+        errorText.textContent = "Tienda no encontrada";
+        document.getElementById("tiendas").appendChild(errorText);
     }
 }
 /**
@@ -341,7 +345,7 @@ async function showTiendasXHR() {
 async function getTiendaByIdXHR() {
     deleteNodes(document.getElementById("tiendas"));
     var idTienda = document.getElementById("searchTienda").value;
-    if (idTienda != null) {
+    if (idTienda != "") {
         const client = new XMLHttpRequest();
 
         client.addEventListener("readystatechange", () => {
@@ -351,6 +355,10 @@ async function getTiendaByIdXHR() {
 
         client.open("GET", urlTiendas + idTienda);
         client.send();
+    }else{
+        let errorText = document.createElement("h2");
+        errorText.textContent = "Tienda no encontrada";
+        document.getElementById("tiendas").appendChild(errorText);
     }
 }
 async function postXHR() {
@@ -384,8 +392,12 @@ function showTiendasJQuery() {
 function getTiendaByIdJquery() {
     deleteNodes(document.getElementById("tiendas"));
     var idTienda = document.getElementById("searchTienda").value;
-    if (idTienda != null) {
+    if (idTienda != "") {
         getTiendaIdJquery(urlTiendas + idTienda);
+    }else{
+        let errorText = document.createElement("h2");
+        errorText.textContent = "Tienda no encontrada";
+        document.getElementById("tiendas").appendChild(errorText);
     }
 }
 async function getTiendasJquery(url) {

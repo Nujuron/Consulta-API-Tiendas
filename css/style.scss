@@ -33,6 +33,9 @@ section{
     align-items: center;
     width: 85%;
 }
+h2{
+    color:darken($primary-color-card, 10%);
+}
 button{
     background-color: lighten($primary-color-button, 10%);
     font-weight: bold;
@@ -57,9 +60,7 @@ button{
     border: solid 2px $primary-color-card;
     border-radius: 23px;
     box-shadow: 3px 4px 15px -5px rgba(0,0,0,0.7);
-  h2{
-      color:darken($primary-color-card, 10%);
-  }
+  
 }
 .method{
     color:darken($primary-color-button, 60%);
@@ -74,12 +75,28 @@ button{
         height: auto;
     }
 }
+#searchBar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 50%;
+}
+#newTienda{
+    background-color: white;
+    border:none;
+    color: darken($primary-color-card, 10%);
+    cursor: pointer;
+}
 #searchById{
     width: 30px;
     height: 30px;
 }
 form{
     display: none;
+    border:darken($primary-color-card, 10%) solid 2px;
+    border-radius: 5px;
+    width: 700px;
+    padding: 10px;
     .datos{
         display: grid;
         grid-template-columns: auto auto;
@@ -98,12 +115,7 @@ form{
 .show{
     display: inline !important;
 }
-#searchBar{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 50%;
-}
+
 .loading {
     width: 2rem;
     height: 2rem;
