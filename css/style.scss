@@ -94,3 +94,16 @@ form{
         transform: rotate(360deg);
     }
 }
+.error{
+    border:solid 2px red;
+}
+
+.goodmsg{
+    color:green;
+}
+.errormsg{
+    color:red;
+}
+.success{
+    border:solid 2px green;
+}

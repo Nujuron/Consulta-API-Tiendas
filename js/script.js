@@ -69,6 +69,33 @@ function createObjectTienda(){
     };
     return jsonData;
 }
+var nameShop = document.getElementById("nombre");
+
+function validateName() {
+    const errorMsg = nameShop.nextElementSibling;
+    
+    if (nameShop.validity.valueMissing) {
+        nameShop.classList.add("error");
+        nameShop.classList.remove("success");
+        errorMsg.textContent = "Este campo es obligatorio";
+        errorMsg.classList.add("errormsg");
+    } else if (nameShop.validity.patternMismatch) {
+        nameShop.classList.add("error");
+        nameShop.classList.remove("success");
+        errorMsg.textContent = "No es un nombre valido";
+        errorMsg.classList.add("errormsg");
+    } else {
+        nameShop.classList.remove("error");
+        nameShop.classList.add("success");
+        errorMsg.textContent = "Todo correcto";
+        errorMsg.classList.add("goodmsg");
+        errorMsg.classList.remove("errormsg");
+        
+    }
+}
+function checkForm(){
+
+}
 
 //-----------------------------------FETCH-------------------------------------------------------------------------------
 /**
@@ -79,6 +106,7 @@ function initializeContentFetch() {
     var clone = document.importNode(t.content, true);
     document.body.firstElementChild.nextElementSibling.appendChild(clone);
     document.getElementById("newTienda").addEventListener("click", showForm);
+    document.getElementById("sendTienda").addEventListener("click", checkForm);
     document.getElementById("searchById").addEventListener("click", getTiendaByIdFetch);
 }
 /**
